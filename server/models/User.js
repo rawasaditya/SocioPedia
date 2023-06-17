@@ -25,6 +25,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       require: false,
     },
+    friends: [{ type: mongoose.Schema.Types.Object, ref: "User" }],
     location: String,
     occupation: String,
   },

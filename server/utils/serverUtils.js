@@ -7,7 +7,7 @@ import helmet from "helmet";
 import authRoutes from "../routes/auth.js";
 import packageJson from "../package.json" assert { type: "json" };
 import mongoose from "mongoose";
-
+import userRouters from "../routes/users.js";
 export const initMiddleWare = (app) => {
   morgan("tiny");
   dotenv.config();
@@ -22,6 +22,7 @@ export const initMiddleWare = (app) => {
 export const initRoutes = (app) => {
   const API_VERSION = `/api/v${packageJson.version}`;
   app.use(`${API_VERSION}/auth`, authRoutes);
+  app.use(`${API_VERSION}/user`, userRouters);
 };
 
 export const initDB = (app) => {
