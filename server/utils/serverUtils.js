@@ -9,7 +9,9 @@ import packageJson from "../package.json" assert { type: "json" };
 import mongoose from "mongoose";
 import userRoutes from "../routes/users.js";
 import postRoutes from "../routes/posts.js";
-
+import Users from "../models/User.js";
+import Post from "../models/Post.js";
+import { users, posts } from "../data/index.js";
 export const initMiddleWare = (app) => {
   morgan("tiny");
   dotenv.config();
@@ -33,6 +35,8 @@ export const initDB = (app) => {
   mongoose
     .connect(process.env.MONGO_URL)
     .then((data) => {
+      // Users.insertMany(users);
+      // Post.insertMany(posts);
       app.listen(PORT, () => console.log(`SERVER PORT: ${PORT}`));
     })
     .catch((err) => {
