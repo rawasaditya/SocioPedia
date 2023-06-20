@@ -11,6 +11,7 @@ import userRoutes from "../routes/users.js";
 import postRoutes from "../routes/posts.js";
 import Users from "../models/User.js";
 import Post from "../models/Post.js";
+import cors from "cors";
 import { users, posts } from "../data/index.js";
 export const initMiddleWare = (app) => {
   morgan("tiny");
@@ -18,8 +19,7 @@ export const initMiddleWare = (app) => {
   const __fileName = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__fileName);
   app.use(express.json());
-  app.use(helmet());
-  app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+  app.use(cors());
   app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 };
 

@@ -15,20 +15,21 @@ import FlexBoxBetween from "../../Components/FlexBoxBetween";
 import { setLogin } from "../../state";
 import * as yup from "yup";
 import { Formik } from "formik";
+import API from "../../axiosConfig.js";
 
 const registerSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  password: yup.string().required("required"),
-  location: yup.string().required("required"),
-  occupation: yup.string().required("required"),
-  picture: yup.string().required("required"),
+  firstName: yup.string().required("Required"),
+  lastName: yup.string().required("Required"),
+  email: yup.string().email("Invalid Email").required("Required"),
+  password: yup.string().required("Required"),
+  location: yup.string().required("Required"),
+  occupation: yup.string().required("Required"),
+  picture: yup.string().required("Required"),
 });
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email("invalid email").required("required"),
-  password: yup.string().required("required"),
+  email: yup.string().email("Invalid Email").required("Required"),
+  password: yup.string().required("Required"),
 });
 
 const initialValuesRegister = {
@@ -47,14 +48,56 @@ const initialValuesLogin = {
 };
 
 const Form = () => {
-  const [pageType, setPageType] = useState("register");
+  const [pageType, setPageType] = useState("login");
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px");
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
-  const handleFormSubmit = async (values, onSubmitProps) => {};
+
+  const register = async (values, onSubmitProps) => {
+    const formData = new FormData();
+    for (let value in values) {
+      formData.append(value, values[value]);
+    }
+    formData.append("picturePath", values.picture.name);
+    API.post("/auth/register", formData)
+      .then((resp) => {
+        console.log(resp);
+        if (resp.status === 201) {
+          setPageType("login");
+          onSubmitProps.resetForm();
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 500) {
+          alert("Something went wrong");
+        }
+      });
+  };
+
+  const login = async (values, onSubmitProps) => {
+    const formData = new FormData();
+    for (let value in values) {
+      formData.append(value, values[value]);
+    }
+    API.post("/auth/login", values)
+      .then((res) => {
+        if (res.data) {
+          dispatch(setLogin(res.data));
+          onSubmitProps.resetForm();
+          navigate("/home");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleFormSubmit = async (values, onSubmitProps) => {
+    if (isLogin) await login(values, onSubmitProps);
+    if (isRegister) await register(values, onSubmitProps);
+  };
   return (
     <Formik
       onSubmit={handleFormSubmit}
@@ -215,7 +258,7 @@ const Form = () => {
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.password}
-                    name="email"
+                    name="password"
                     error={
                       Boolean(touched.password) && Boolean(errors.password)
                     }

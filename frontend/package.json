@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "proxy": "http://localhost:5002/api/v1/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -15,6 +16,7 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.5",
     "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.4.0",
     "formik": "^2.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
