@@ -5,7 +5,7 @@ import "./index.css";
 import authReducer from "./state";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-const store = configureStore({ reducer: authReducer });
+import { store } from "./state/store.js";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <React.StrictMode>

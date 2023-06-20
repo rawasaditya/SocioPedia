@@ -20,7 +20,10 @@ export const initMiddleWare = (app) => {
   const __dirname = path.dirname(__fileName);
   app.use(express.json());
   app.use(cors());
-  app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+  app.use(
+    "/assets",
+    express.static(path.join(__dirname, "..", "public/assets"))
+  );
 };
 
 export const initRoutes = (app) => {

@@ -86,6 +86,7 @@ const Form = () => {
       .then((res) => {
         if (res.data) {
           dispatch(setLogin(res.data));
+          localStorage.setItem("user", JSON.stringify(res.data));
           onSubmitProps.resetForm();
           navigate("/home");
         }

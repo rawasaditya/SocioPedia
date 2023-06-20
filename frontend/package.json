@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "http://localhost:5002/api/v1/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
