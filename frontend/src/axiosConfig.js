@@ -10,4 +10,16 @@ instance.interceptors.request.use(function (config) {
   )?.token;
   return config;
 });
+
+instance.interceptors.response.use(
+  function (resp) {
+    console.log(resp);
+    return resp;
+  },
+  function (err) {
+    if (err.response.status === 403) {
+      localStorage.removeItem("user");
+    }
+  }
+);
 export default instance;

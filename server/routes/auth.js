@@ -7,4 +7,7 @@ const router = express.Router();
 
 router.post("/register", upload.single("picture"), register);
 router.post("/login", login);
+router.get("/isAuthenticated", verifyToken, (req, res) => {
+  res.status(200).json({ message: "VERIFIED" });
+});
 export default router;

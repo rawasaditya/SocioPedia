@@ -42,35 +42,33 @@ const NavBar = () => {
   }`;
   return (
     <FlexBoxBetween padding="1rem 6%" backgroundColor={alt}>
-      <FlexBoxBetween>
-        <Typography
-          fontWeight="bold"
-          fontSize="clamp(1rem,2rem,2.25rem)"
-          color="primary"
-          onClick={() => navigate("/home")}
-          sx={{
-            "&:hover": {
-              color: primaryLight,
-              cursor: "pointer",
-            },
-          }}
+      <Typography
+        fontWeight="bold"
+        fontSize="clamp(1rem,2rem,2.25rem)"
+        color="primary"
+        onClick={() => navigate("/home")}
+        sx={{
+          "&:hover": {
+            color: primaryLight,
+            cursor: "pointer",
+          },
+        }}
+      >
+        SocioPedia
+      </Typography>
+      {isNonMobileScreens && (
+        <FlexBoxBetween
+          backgroundColor={neutralLight}
+          borderRadius={"0.5rem"}
+          gap="3rem"
+          padding="0.1rem 1.5rem"
         >
-          SocioPedia
-        </Typography>
-        {isNonMobileScreens && (
-          <FlexBoxBetween
-            backgroundColor={neutralLight}
-            borderRadius={"0.5rem"}
-            gap="3rem"
-            padding="0.1rem 1.5rem"
-          >
-            <InputBase placeholder="Search" />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBoxBetween>
-        )}
-      </FlexBoxBetween>
+          <InputBase placeholder="Search" />
+          <IconButton>
+            <Search />
+          </IconButton>
+        </FlexBoxBetween>
+      )}
       {/* Desktop */}
       {isNonMobileScreens ? (
         <FlexBoxBetween gap="1rem">

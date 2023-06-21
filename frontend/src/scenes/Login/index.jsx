@@ -1,6 +1,11 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import Form from "./Form";
-const Login = () => {
+const Login = ({ isAuth }) => {
+  const navigate = useNavigate();
+  if (isAuth) {
+    navigate("/home");
+  }
   const theme = useTheme();
   const isNonMobileScreen = useMediaQuery("(min-width:1000px)");
   return (

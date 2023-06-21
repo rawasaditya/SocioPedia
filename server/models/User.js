@@ -28,6 +28,9 @@ const UserSchema = new mongoose.Schema(
     friends: [{ type: mongoose.Schema.Types.Object, ref: "User" }],
     location: String,
     occupation: String,
+    linkedIn: String,
+    twitter: String,
+    instagram: String,
   },
   {
     timestamps: true,
