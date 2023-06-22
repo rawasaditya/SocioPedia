@@ -5,7 +5,7 @@ import Home from "./scenes/Home";
 import Login from "./scenes/Login";
 import Profile from "./scenes/Profile";
 import { useSelector, useDispatch } from "react-redux";
-import { setLogout } from "./state";
+import { setLogout, setLogin } from "./state";
 import { useMemo } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
@@ -13,7 +13,7 @@ import { themeSettings } from "./theme.js";
 import API from "./axiosConfig.js";
 const App = () => {
   const mode = useSelector((state) => state.mode);
-  const [isAuth, setAuth] = useState(false);
+  const [isAuth, setAuth] = useState(null);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const user = JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch();
@@ -21,6 +21,9 @@ const App = () => {
     if (user?.token) {
       API.get("/auth/isAuthenticated")
         .then((res) => {
+          const user = JSON.parse(localStorage.getItem("user"));
+          console.log(user);
+          dispatch(setLogin(user));
           setAuth(true);
         })
         .catch((err) => {
@@ -30,18 +33,18 @@ const App = () => {
           }
         });
     }
-  }, []);
+  }, [isAuth]);
   return (
     <div className="app">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          {isAuth ? <NavBar /> : <></>}
+          {isAuth === true ? <NavBar /> : <></>}
           <CssBaseline />
           <Routes>
             <Route path="/" element={<Login isAuth={isAuth} />} />
             <Route
               path="/home"
-              element={isAuth ? <Home /> : <Navigate to="/" />}
+              element={isAuth === true ? <Home /> : <Navigate to="/" />}
             />
             <Route path="/profile/:userId" element={<Profile />} />
           </Routes>

@@ -31,16 +31,16 @@ const Home = () => {
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
           <UserWidget user={user} />
         </Box>
+        <Box
+          flexBasis={isNonMobileScreens ? "42%" : undefined}
+          mt={isNonMobileScreens ? undefined : "2rem"}
+        >
+          <MyPostWidget picturePath={picturePath} />
+        </Box>
+        {isNonMobileScreens && (
+          <Box flexBasis={isNonMobileScreens ? "26%" : undefined}></Box>
+        )}
       </Box>
-      <Box
-        flexBasis={isNonMobileScreens ? "42%" : undefined}
-        mt={isNonMobileScreens ? undefined : "2rem"}
-      >
-        <MyPostWidget picturePath={picturePath} />
-      </Box>
-      {isNonMobileScreens && (
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}></Box>
-      )}
     </Box>
   );
 };
