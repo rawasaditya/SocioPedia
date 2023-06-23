@@ -12,6 +12,6 @@ const router = express.Router();
 router.get("/", verifyToken, getFeedsPosts);
 router.get("/:userId/posts", verifyToken, getUserPosts);
 router.patch("/:id/like", verifyToken, likePost);
-router.post("/post", verifyToken, createPosts);
+router.post("/post", verifyToken, upload.single("picture"), createPosts);
 
 export default router;

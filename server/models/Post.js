@@ -10,7 +10,6 @@ const postSchema = new mongoose.Schema(
     },
     picturePath: {
       type: String,
-      required: true,
     },
     pictureName: String,
     comments: [

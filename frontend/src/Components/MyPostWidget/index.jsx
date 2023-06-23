@@ -6,6 +6,7 @@ import {
   MicOutlined,
   MoreHorizOutlined,
 } from "@mui/icons-material";
+import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import {
   Box,
   Divider,
@@ -44,9 +45,9 @@ const MuPostWidget = ({ picturePath }) => {
       formData.append("picturePath", image.name);
     }
     const response = await API.post("posts/post", formData);
-    setIsImage(false);
-    setImage(null);
-    setPosts(null);
+    // setIsImage(false);
+    // setImage(null);
+    // setPosts(null);
   };
 
   return (
@@ -92,11 +93,21 @@ const MuPostWidget = ({ picturePath }) => {
               >
                 <input {...getInputProps()} />
                 {!image ? (
-                  <Typography textAlign="center">Add Picture HERE</Typography>
+                  <Typography textAlign="center">Add Picture Here</Typography>
                 ) : (
                   <FlexBoxBetween>
                     <Typography>{image.name}</Typography>
-                    <EditOutlined />
+                    {image && (
+                      <IconButton
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setImage(null);
+                        }}
+                        p="1rem"
+                      >
+                        <DeleteOutlined />
+                      </IconButton>
+                    )}
                   </FlexBoxBetween>
                 )}
               </Box>
@@ -104,6 +115,52 @@ const MuPostWidget = ({ picturePath }) => {
           </DropZone>
         </Box>
       )}
+      <Divider sx={{ margin: "1.25rem 0" }} />
+      <FlexBoxBetween>
+        <FlexBoxBetween
+          gap="0.25rem"
+          onClick={() => {
+            setIsImage(!isImage);
+          }}
+        >
+          <ImageOutlinedIcon sx={{ color: mediumMain }} />
+          <Typography
+            color={mediumMain}
+            sx={{ "&:hover": { cursor: "pointer", color: medium } }}
+          >
+            Image
+          </Typography>
+        </FlexBoxBetween>
+        <FlexBoxBetween gap="0.25rem">
+          <GifBoxOutlined sx={{ color: mediumMain }} />
+          <Typography
+            color={mediumMain}
+            sx={{ "&:hover": { cursor: "pointer", color: medium } }}
+          >
+            Clip
+          </Typography>
+        </FlexBoxBetween>
+        <FlexBoxBetween gap="0.25rem">
+          <AttachFileOutlined sx={{ color: mediumMain }} />
+          <Typography
+            color={mediumMain}
+            sx={{ "&:hover": { cursor: "pointer", color: medium } }}
+          >
+            Attachment
+          </Typography>
+        </FlexBoxBetween>
+        <Button
+          disabled={!post}
+          onClick={handlePost}
+          sx={{
+            color: palette.background.alt,
+            backgroundColor: palette.primary.main,
+            borderRadius: "3rem",
+          }}
+        >
+          Post
+        </Button>
+      </FlexBoxBetween>
     </WidgetWrapper>
   );
 };
