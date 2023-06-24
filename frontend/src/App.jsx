@@ -48,7 +48,7 @@ const App = () => {
               element={isAuth === true ? <Home /> : <Navigate to="/" />}
             />
             <Route path="/profile/:userId" element={<Profile />} />
-            <Route path="*" component={PageNotFound} />
+            <Route path="*" element={PageNotFound} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
