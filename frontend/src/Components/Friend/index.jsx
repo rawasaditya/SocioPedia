@@ -15,8 +15,8 @@ const Friend = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { _id } = useSelector((state) => state.user);
-  const friends = useSelector((state) => state.user.friends);
+  const { _id } = useSelector((state) => state?.user);
+  const friends = useSelector((state) => state?.user?.friends);
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
@@ -39,7 +39,6 @@ const Friend = ({
         <Box
           onClick={() => {
             navigate(`/profile/${friendId}`);
-            navigate(0);
           }}
         >
           <Typography

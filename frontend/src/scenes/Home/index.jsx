@@ -4,6 +4,7 @@ import MyPostWidget from "../../Components/MyPostWidget";
 import { Box, useMediaQuery } from "@mui/material";
 import PostsWidget from "../../Components/PostsWidget";
 import API from "../../axiosConfig.js";
+import FriendListWidget from "../../Components/FriendListWidget";
 const Home = () => {
   const [user, setUser] = useState(null);
 
@@ -40,7 +41,9 @@ const Home = () => {
           <PostsWidget />
         </Box>
         {isNonMobileScreens && (
-          <Box flexBasis={isNonMobileScreens ? "26%" : undefined}></Box>
+          <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+            <FriendListWidget />
+          </Box>
         )}
       </Box>
     </Box>

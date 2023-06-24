@@ -48,7 +48,7 @@ const App = () => {
               element={isAuth === true ? <Home /> : <Navigate to="/" />}
             />
             <Route path="/profile/:userId" element={<Profile />} />
-            <Route component={Error} />
+            <Route path="*" element={<Error />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
