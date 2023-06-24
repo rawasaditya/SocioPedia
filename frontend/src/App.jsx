@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme.js";
+import {PageNotFound} from "./Components/PageNotFound/PageNotFound"
 import API from "./axiosConfig.js";
 const App = () => {
   const mode = useSelector((state) => state.mode);
@@ -47,6 +48,7 @@ const App = () => {
               element={isAuth === true ? <Home /> : <Navigate to="/" />}
             />
             <Route path="/profile/:userId" element={<Profile />} />
+            <Route path="*" component={PageNotFound} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
