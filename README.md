@@ -1,10 +1,6 @@
 
 <br/>
 <p align="center">
-  <a href="https://github.com/ShaanCoding/ReadME-Generator">
-    <img src="https://github.com/martinyis/RepoAppIdea/blob/main/src/assets/logo_transparent.png?raw=true" alt="Logo" width="80" height="80">
-  </a>
-
   <h3 align="center">Building a Community of Developers and Ideas</h3>
 
   <p align="center">
