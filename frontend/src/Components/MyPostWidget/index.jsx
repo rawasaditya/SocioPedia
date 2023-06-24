@@ -27,13 +27,12 @@ import { setPosts } from "../../state";
 import API from "../../axiosConfig.js";
 const MuPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
-  const [isImage, setIsImage] = useState(true);
+  const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(null);
   const [post, setPost] = useState("");
   const { palette } = useTheme();
   const user = useSelector((state) => state?.user);
   const posts = useSelector((state) => state?.posts);
-  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
 

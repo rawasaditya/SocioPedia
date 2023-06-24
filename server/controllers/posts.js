@@ -22,10 +22,9 @@ export const createPosts = async (req, res) => {
 };
 export const getFeedsPosts = async (req, res) => {
   try {
-    const posts = await Post.find().populate(
-      "userId",
-      "_id firstName lastName email location picturePath"
-    );
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .populate("userId", "_id firstName lastName email location picturePath");
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).json({ message: err.message });
