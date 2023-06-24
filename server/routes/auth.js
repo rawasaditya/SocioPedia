@@ -11,7 +11,6 @@ router.post("/register", upload.single("picture"), register);
 router.post("/login", login);
 router.get("/isAuthenticated", verifyToken, async (req, res) => {
   const token = req.headers.authorization;
-  console.log(token);
   const user = await User.findById(req.user.id)
     .select("-password")
     .populate("friends", "_id firstName lastName email location picturePath");
