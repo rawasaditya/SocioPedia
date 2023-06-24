@@ -8,8 +8,7 @@ import API from "../../axiosConfig.js";
 const FriendListWidget = ({ userId }) => {
   const dispatch = useDispatch();
   const { palette } = useTheme();
-  const token = useSelector((state) => state.token);
-  const friends = useSelector((state) => state.user.friends);
+  const friends = useSelector((state) => state?.user?.friends);
 
   const getFriends = async () => {
     API.get(`user/${userId}/friends`)
@@ -34,7 +33,7 @@ const FriendListWidget = ({ userId }) => {
         Friend List
       </Typography>
       <Box display="flex" flexDirection="column" gap="1.5rem">
-        {friends.map((friend) => {
+        {friends?.map((friend) => {
           return (
             <>
               <Friend
