@@ -25,6 +25,7 @@ export const getUserFriends = async (req, res) => {
 export const addRemoveFriend = async (req, res) => {
   try {
     const { id, friendsId } = req.params;
+    if (id === friendsId) throw "Cannot add self as friend";
     const user = await User.findById(id).select("-password");
     const friend = await User.findById(friendsId).select("-password");
     if (user.friends.includes(friendsId)) {
@@ -35,7 +36,13 @@ export const addRemoveFriend = async (req, res) => {
       friend.friends.push(id);
     }
     await user.save();
-    res.status(200).json(user);
+    const updatedUser = await user.populate(
+      "friends",
+      "_id firstName lastName email picturePath location occupation"
+    );
+    await friend.save();
+
+    res.status(200).json(updatedUser);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }

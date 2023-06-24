@@ -13,7 +13,6 @@ instance.interceptors.request.use(function (config) {
 
 instance.interceptors.response.use(
   function (resp) {
-    console.log(resp);
     return resp;
   },
   function (err) {

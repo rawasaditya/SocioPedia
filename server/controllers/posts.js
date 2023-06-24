@@ -18,7 +18,10 @@ export const createPosts = async (req, res) => {
 };
 export const getFeedsPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().populate(
+      "userId",
+      "_id firstName lastName email location picturePath"
+    );
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -29,7 +32,7 @@ export const getUserPosts = async (req, res) => {
     const { userId } = req.params;
     const posts = await Post.find({ userId }).populate(
       "userId",
-      "firstName lastName picturePath"
+      "_id firstName lastName email location picturePath"
     );
     res.json(posts);
   } catch (err) {
@@ -47,7 +50,11 @@ export const likePost = async (req, res) => {
       post.likes.push(userId);
     }
     await post.save();
-    res.json(post);
+    const latestPost = await post.populate(
+      "userId",
+      "_id firstName lastName email location picturePath"
+    );
+    res.json(latestPost);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

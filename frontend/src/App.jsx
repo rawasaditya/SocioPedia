@@ -21,9 +21,9 @@ const App = () => {
     if (user?.token) {
       API.get("/auth/isAuthenticated")
         .then((res) => {
-          const user = JSON.parse(localStorage.getItem("user"));
-          console.log(user);
-          dispatch(setLogin(user));
+          console.log(res.data);
+          localStorage.setItem("user", JSON.stringify(res.data));
+          dispatch(setLogin(res.data));
           setAuth(true);
         })
         .catch((err) => {

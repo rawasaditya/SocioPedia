@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import UserWidget from "../../Components/UserWidget";
 import MyPostWidget from "../../Components/MyPostWidget";
 import { Box, useMediaQuery } from "@mui/material";
+import PostsWidget from "../../Components/PostsWidget";
 import API from "../../axiosConfig.js";
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -36,6 +37,7 @@ const Home = () => {
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
           <MyPostWidget picturePath={picturePath} />
+          <PostsWidget />
         </Box>
         {isNonMobileScreens && (
           <Box flexBasis={isNonMobileScreens ? "26%" : undefined}></Box>
