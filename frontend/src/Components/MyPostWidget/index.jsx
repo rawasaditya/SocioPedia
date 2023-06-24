@@ -29,9 +29,10 @@ const MuPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(true);
   const [image, setImage] = useState(null);
-  const [post, setPosts] = useState("");
+  const [post, setPost] = useState("");
   const { palette } = useTheme();
   const user = useSelector((state) => state?.user);
+  const posts = useSelector((state) => state?.posts);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
@@ -44,10 +45,17 @@ const MuPostWidget = ({ picturePath }) => {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
     }
-    const response = await API.post("posts/post", formData);
-    setIsImage(false);
-    setImage(null);
-    setPosts(null);
+    API.post("posts/post", formData)
+      .then((res) => {
+        console.log(res);
+        dispatch(setPosts({ posts: [res.data, ...posts] }));
+        setIsImage(false);
+        setImage(null);
+        setPost("");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -56,7 +64,7 @@ const MuPostWidget = ({ picturePath }) => {
         <UserImage image={picturePath} />
         <InputBase
           placeholder="What's on your mind"
-          onChange={(e) => setPosts(e.target.value)}
+          onChange={(e) => setPost(e.target.value)}
           value={post}
           sx={{
             width: "100%",

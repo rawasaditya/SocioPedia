@@ -11,7 +11,11 @@ export const createPosts = async (req, res) => {
       pictureName,
     });
     await newPost.save();
-    res.status(201).json(newPost);
+    const update = await newPost.populate(
+      "userId",
+      "_id firstName lastName email location picturePath"
+    );
+    res.status(201).json(update);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
