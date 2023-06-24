@@ -3,12 +3,18 @@ import { login, register } from "../controllers/auth.js";
 import { verifyToken } from "../middleware/auth.js";
 import { upload } from "../utils/fileUploadUtils.js";
 import { getUser } from "../controllers/users.js";
+import User from "../models/User.js";
 const router = express.Router();
 /* FILE STORAGE */
 
 router.post("/register", upload.single("picture"), register);
 router.post("/login", login);
 router.get("/isAuthenticated", verifyToken, async (req, res) => {
-  res.status(200).json({ message: "Authenticated" });
+  const token = req.headers.authorization;
+  console.log(token);
+  const user = await User.findById(req.user.id)
+    .select("-password")
+    .populate("friends", "_id firstName lastName email location picturePath");
+  res.status(200).json({ user, token });
 });
 export default router;

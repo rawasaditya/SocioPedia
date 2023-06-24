@@ -64,7 +64,6 @@ const Form = () => {
     formData.append("picturePath", values.picture.name);
     API.post("/auth/register", formData)
       .then((resp) => {
-        console.log(resp);
         if (resp.status === 201) {
           setPageType("login");
           onSubmitProps.resetForm();
@@ -87,6 +86,8 @@ const Form = () => {
         if (res.data) {
           dispatch(setLogin(res.data));
           localStorage.setItem("user", JSON.stringify(res.data));
+          // navigate("/home");
+          // navigate(0);
           onSubmitProps.resetForm();
         }
       })
