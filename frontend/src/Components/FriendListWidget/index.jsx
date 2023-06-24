@@ -13,14 +13,14 @@ const FriendListWidget = ({ userId }) => {
   const getFriends = async () => {
     API.get(`user/${userId}/friends`)
       .then((data) => {
-        dispatch(setFriends({ friends: data.data }));
+        dispatch(setFriends({ friends: data?.data?.friends }));
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     getFriends();
-  }, []);
+  }, [userId]);
 
   return (
     <WidgetWrapper>

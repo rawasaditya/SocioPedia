@@ -11,6 +11,7 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const { userId } = useParams();
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  const loggedInUser = useSelector((state) => state.user);
   const getUser = async () => {
     API.get(`user/${userId}`)
       .then((data) => {
@@ -22,7 +23,7 @@ const Profile = () => {
   };
   useEffect(() => {
     getUser();
-  }, []);
+  }, [userId]);
   if (!user) return null;
   return (
     <Box
@@ -42,8 +43,10 @@ const Profile = () => {
         flexBasis={isNonMobileScreens ? "42%" : undefined}
         mt={isNonMobileScreens ? undefined : "2rem"}
       >
-        <MyPostWidget picturePath={user.picturePath} />
-        <PostsWidget userId={userId} />
+        {loggedInUser._id === userId && (
+          <MyPostWidget picturePath={user.picturePath} />
+        )}
+        <PostsWidget userId={userId} isProfile={true} />
       </Box>
     </Box>
   );

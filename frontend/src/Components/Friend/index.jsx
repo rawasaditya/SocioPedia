@@ -15,22 +15,24 @@ const Friend = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { _id } = useSelector((state) => state?.user);
+  const user = useSelector((state) => state?.user);
   const friends = useSelector((state) => state?.user?.friends);
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
-  const isFriend = friends.find((friends) => friends._id === friendId);
+  const isFriend = friends?.find((friends) => friends._id === friendId);
   const patchFriend = async () => {
-    API.patch(`user/${_id}/${friendId}`)
-      .then((data) => {
-        dispatch(setFriends({ friends: data.data.friends }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (user?._id) {
+      API.patch(`user/${user?._id}/${friendId}`)
+        .then((data) => {
+          dispatch(setFriends({ friends: data.data.friends }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
   return (
     <FlexBoxBetween>
