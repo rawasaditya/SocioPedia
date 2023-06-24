@@ -11,6 +11,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme.js";
 import API from "./axiosConfig.js";
+import Error from "./scenes/Error";
 const App = () => {
   const mode = useSelector((state) => state.mode);
   const [isAuth, setAuth] = useState(null);
@@ -47,6 +48,7 @@ const App = () => {
               element={isAuth === true ? <Home /> : <Navigate to="/" />}
             />
             <Route path="/profile/:userId" element={<Profile />} />
+            <Route component={Error} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
