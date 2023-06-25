@@ -19,8 +19,9 @@ jobs:
           npm ci
         shell: bash
       - name: Running linting 
-        run: ls
-        shell: bash
+        run: |
+          cd ./frontend
+          npm run lint
   goodbye:
     runs-on: ubuntu-latest
     steps:
