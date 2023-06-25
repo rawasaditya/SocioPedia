@@ -16,7 +16,7 @@ jobs:
       - name: Installing Packages
         run: |
           cd ./frontend
-          npm run ci
+          npm ci
         shell: bash
       - name: Running linting 
         run: ls
