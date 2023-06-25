@@ -9,14 +9,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  hello:
+  Run-linting:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: hello world
-        run: echo "Hello world"
+      - name: Installing Packages
+        run: npm ci ./frontend
         shell: bash
-  
+      - name: Running linting 
+        run: npm lint ./frontend
+        shell: bash
   goodbye:
     runs-on: ubuntu-latest
     steps:
