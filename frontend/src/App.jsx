@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme.js";
+import { useNavigate } from "react-router-dom";
 import API from "./axiosConfig.js";
 import Error from "./scenes/Error";
 const App = () => {
@@ -22,7 +23,6 @@ const App = () => {
     if (user?.token) {
       API.get("/auth/isAuthenticated")
         .then((res) => {
-          console.log(res.data);
           localStorage.setItem("user", JSON.stringify(res.data));
           dispatch(setLogin(res.data));
           setAuth(true);
