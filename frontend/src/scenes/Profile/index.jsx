@@ -34,9 +34,13 @@ const Profile = () => {
       justifyContent="center"
     >
       <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-        <UserWidget user={user} />
+        <UserWidget user={user} loggedInUser={loggedInUser} />
         <Box m="2rem 0">
-          <FriendListWidget userId={userId} />
+          <FriendListWidget
+            userId={userId}
+            loggedInUser={loggedInUser}
+            selfProfile={userId === loggedInUser?._id}
+          />
         </Box>
       </Box>
       <Box
