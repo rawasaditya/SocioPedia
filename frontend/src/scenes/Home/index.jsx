@@ -42,7 +42,7 @@ const Home = () => {
         </Box>
         {isNonMobileScreens && (
           <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-            <FriendListWidget userId={user?._id} />
+            <FriendListWidget userId={user?._id} selfProfile={true} />
           </Box>
         )}
       </Box>
