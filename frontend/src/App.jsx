@@ -10,7 +10,6 @@ import { useMemo } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme.js";
-import { useNavigate } from "react-router-dom";
 import API from "./axiosConfig.js";
 import Error from "./scenes/Error";
 const App = () => {
@@ -20,20 +19,23 @@ const App = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch();
   useEffect(() => {
-    if (user?.token) {
-      API.get("/auth/isAuthenticated")
-        .then((res) => {
-          localStorage.setItem("user", JSON.stringify(res.data));
-          dispatch(setLogin(res.data));
-          setAuth(true);
-        })
-        .catch((err) => {
-          if (err.response.status === 403) {
-            dispatch(setLogout());
-            setAuth(false);
-          }
-        });
+    function checkAuthentication() {
+      if (user?.token) {
+        API.get("/auth/isAuthenticated")
+          .then((res) => {
+            localStorage.setItem("user", JSON.stringify(res.data));
+            dispatch(setLogin(res.data));
+            setAuth(true);
+          })
+          .catch((err) => {
+            if (err.response.status === 403) {
+              dispatch(setLogout());
+              setAuth(false);
+            }
+          });
+      }
     }
+    checkAuthentication();
   }, [isAuth]);
   return (
     <div className="app">

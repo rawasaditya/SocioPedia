@@ -3,7 +3,6 @@ import {
   ChatBubbleOutlineOutlined,
   FavoriteBorderOutlined,
   FavoriteOutlined,
-  ShareOutlined,
 } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBoxBetween from "../FlexBoxBetween";
@@ -19,22 +18,15 @@ const PostWidget = ({
   likes,
   description,
   picturePath,
-  pictureName,
   comments,
-  createdAt,
-  updatedAt,
 }) => {
   const [isComments, setIsComments] = useState(false);
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = likes.includes(loggedInUserId);
   const likeCount = Object.keys(likes).length;
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.token);
   const { palette } = useTheme();
-  const primaryLight = palette.primary.light;
-  const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
-  const medium = palette.neutral.medium;
   const primary = palette.primary.main;
 
   const patchLike = async () => {
@@ -43,7 +35,9 @@ const PostWidget = ({
       .then((data) => {
         dispatch(setPost({ post: data.data }));
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -95,7 +89,7 @@ const PostWidget = ({
       </FlexBoxBetween>
       {isComments && (
         <Box mt="0.5rem">
-          {comments.map((comment, i) => {
+          {comments.map((comment) => {
             <Box key={comment._id}>
               <Divider />
               <Typography

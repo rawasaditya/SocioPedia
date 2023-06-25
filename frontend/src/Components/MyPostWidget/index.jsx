@@ -1,10 +1,7 @@
 import {
-  EditOutlined,
   DeleteOutlined,
   AttachFileOutlined,
   GifBoxOutlined,
-  MicOutlined,
-  MoreHorizOutlined,
 } from "@mui/icons-material";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import {
@@ -15,7 +12,6 @@ import {
   useTheme,
   Button,
   IconButton,
-  useMediaQuery,
 } from "@mui/material";
 import FlexBoxBetween from "../FlexBoxBetween";
 import DropZone from "react-dropzone";

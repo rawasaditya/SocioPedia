@@ -6,7 +6,6 @@ import API from "../../axiosConfig.js";
 const PostsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
-  const token = useSelector((state) => state.token);
   const getPosts = async () => {
     const response = await API.get("posts");
     dispatch(setPosts({ posts: response.data }));
