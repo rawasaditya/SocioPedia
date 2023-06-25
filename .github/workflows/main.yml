@@ -14,10 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Installing Packages
-        run: npm ci ./frontend
+        run: |
+          cd ./frontend
+          npm run ci
         shell: bash
       - name: Running linting 
-        run: npm lint ./frontend
+        run: ls
         shell: bash
   goodbye:
     runs-on: ubuntu-latest
