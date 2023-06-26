@@ -33,7 +33,7 @@ jobs:
           cd ./frontend
           npm ci
         shell: bash
-      - name: Running linting 
+      - name: Building 
         run: |
           cd ./frontend
           npm run build
