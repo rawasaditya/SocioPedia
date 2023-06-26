@@ -24,18 +24,17 @@ jobs:
           npm run lint
         shell: bash
 
-  build:
-    building-project:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-        - name: Installing Packages
-          run: |
-            cd ./frontend
-            npm ci
-          shell: bash
-        - name: Running linting 
-          run: |
-            cd ./frontend
-            npm run build
-          shell: bash
+  building-project:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Installing Packages
+        run: |
+          cd ./frontend
+          npm ci
+        shell: bash
+      - name: Running linting 
+        run: |
+          cd ./frontend
+          npm run build
+        shell: bash
