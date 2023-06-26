@@ -1,4 +1,4 @@
-name: Hello World workflow
+name: Project setup workflow
 on:
   push:
     branches:
