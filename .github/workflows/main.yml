@@ -22,13 +22,11 @@ jobs:
         run: |
           cd ./frontend
           npm run lint
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
       - name: building
         run: |
           cd ./frontend
           npm run build 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: goodbye world
-        run: echo "good bye"
-        shell: bash
