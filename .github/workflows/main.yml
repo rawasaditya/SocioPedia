@@ -22,13 +22,19 @@ jobs:
         run: |
           cd ./frontend
           npm run lint
-      - name: building
-        run: |
-          cd ./frontend
-          npm run build 
-  build:
+        shell: bash
+
+  building-project:
     runs-on: ubuntu-latest
     steps:
-      - name: goodbye world
-        run: echo "good bye"
+      - uses: actions/checkout@v2
+      - name: Installing Packages
+        run: |
+          cd ./frontend
+          npm ci
+        shell: bash
+      - name: Building 
+        run: |
+          cd ./frontend
+          npm run build
         shell: bash
