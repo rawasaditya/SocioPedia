@@ -22,11 +22,17 @@ jobs:
         run: |
           cd ./frontend
           npm run lint
+        shell: bash
 
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: building
+      - uses: actions/checkout@v2
+      - name: Installing Packages
         run: |
           cd ./frontend
-          npm run build 
+          npm ci
+        shell: bash
+      - name: Building project 
+        run: |
+          cd ./frontend
+          npm run build
+        shell: bash
