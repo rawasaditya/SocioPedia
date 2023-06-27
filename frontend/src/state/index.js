@@ -11,8 +11,12 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setModeState: (state, action) =>{
+      state.mode = action.payload.sociopediaMode
+    },
     setMode: (state) => {
       state.mode = state.mode === "light" ? "dark" : "light";
+      localStorage.setItem("sociopediaMode", state.mode)
     },
     setLogin: (state, action) => {
       state.user = action.payload.user;
@@ -45,7 +49,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost } =
+export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost, setModeState } =
   authSlice.actions;
 
 export default authSlice.reducer;

@@ -5,7 +5,7 @@ import Home from "./scenes/Home";
 import Login from "./scenes/Login";
 import Profile from "./scenes/Profile";
 import { useSelector, useDispatch } from "react-redux";
-import { setLogout, setLogin } from "./state";
+import { setLogout, setLogin, setModeState} from "./state";
 import { useMemo } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
@@ -18,6 +18,15 @@ const App = () => {
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const user = JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch();
+  useEffect(()=>{
+    if(localStorage.getItem("sociopediaMode") === null){
+      localStorage.setItem("sociopediaMode", mode)
+    }
+    else{
+      dispatch(setModeState({"sociopediaMode": localStorage.getItem("sociopediaMode")}))
+    }
+  }, [])
+
   useEffect(() => {
     function checkAuthentication() {
       if (user?.token) {
