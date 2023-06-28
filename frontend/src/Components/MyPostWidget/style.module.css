@@ -1,0 +1,11 @@
+.gifPreview {
+  transition: 0.3s ease;
+}
+.gifPreview:hover {
+  cursor: pointer;
+}
+
+.selected {
+  border: 5px solid #bada55;
+  scale: 0.9;
+}

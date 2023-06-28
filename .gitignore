@@ -3,3 +3,4 @@ frontend/node_modules/
 
 server/.env
 server/public/assets/
+frontend/src/utils.js
