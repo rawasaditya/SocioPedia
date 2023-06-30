@@ -14,7 +14,7 @@ import API from "./axiosConfig.js";
 import Error from "./scenes/Error";
 const App = () => {
   const mode = useSelector((state) => state.mode);
-  const [isAuth, setAuth] = useState(null);
+  const [isAuth, setAuth] = useState(true);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const user = JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch();
@@ -44,7 +44,8 @@ const App = () => {
           {isAuth === true ? <NavBar /> : <></>}
           <CssBaseline />
           <Routes>
-            <Route path="/" element={<Login isAuth={isAuth} />} />
+            {/* <Route path="/" element={<Login isAuth={isAuth} />} /> */}
+            <Route path="/" element={<Profile  />} />
             <Route
               path="/home"
               element={isAuth === true ? <Home /> : <Navigate to="/" />}
