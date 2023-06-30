@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../state";
 import { useNavigate } from "react-router-dom";
 import FlexBoxBetween from "../FlexBoxBetween";
+import SearchDropDown from "../SearchDropDown";
 const NavBar = () => {
   const [isMobileMenuToggled, setIisMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
@@ -36,10 +37,9 @@ const NavBar = () => {
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
-
-  const fullName = `${user?.firstName ? user?.firstName : ""} ${
-    user?.lastName ? user?.lastName : ""
-  }`;
+  const [SearchInput, setSearchInput] = useState(false);
+  const fullName = `${user?.firstName ? user?.firstName : ""} ${user?.lastName ? user?.lastName : ""
+    }`;
   return (
     <FlexBoxBetween padding="1rem 6%" backgroundColor={alt}>
       <Typography
@@ -63,10 +63,22 @@ const NavBar = () => {
           gap="3rem"
           padding="0.1rem 1.5rem"
         >
-          <InputBase placeholder="Search" />
+          <InputBase placeholder="Search" onChange={(e) => console.log(e.target.value)} />
           <IconButton>
             <Search />
           </IconButton>
+          <FlexBoxBetween
+            backgroundColor={neutralLight}
+            borderRadius={"0.5rem"}
+            gap="3rem"
+            padding="0.1rem 1.5rem"
+            position='absolute'
+            top='70px'
+            maxWidth='230px'
+            width='100%'
+          >
+            <SearchDropDown value={SearchInput} />
+          </FlexBoxBetween>
         </FlexBoxBetween>
       )}
       {/* Desktop */}
