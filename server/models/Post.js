@@ -12,7 +12,6 @@ const postSchema = new mongoose.Schema(
       type: String,
     },
     pictureName: String,
-    gifPath: String,
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,

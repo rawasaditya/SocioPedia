@@ -1,7 +1,10 @@
 import {
+  EditOutlined,
   DeleteOutlined,
   AttachFileOutlined,
   GifBoxOutlined,
+  MicOutlined,
+  MoreHorizOutlined,
 } from "@mui/icons-material";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import {
@@ -12,12 +15,12 @@ import {
   useTheme,
   Button,
   IconButton,
+  useMediaQuery,
 } from "@mui/material";
 import FlexBoxBetween from "../FlexBoxBetween";
 import DropZone from "react-dropzone";
 import WidgetWrapper from "../WidgetWrapper";
 import UserImage from "../UserImage";
-import GifContainer from "./GifContainer";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../state";
@@ -25,8 +28,6 @@ import API from "../../axiosConfig.js";
 const MuPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(false);
-  const [isGif, setIsGif] = useState(true);
-  const [gifLink, setGifLink] = useState("");
   const [image, setImage] = useState(null);
   const [post, setPost] = useState("");
   const { palette } = useTheme();
@@ -43,19 +44,13 @@ const MuPostWidget = ({ picturePath }) => {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
     }
-
-    if (gifLink) {
-      formData.append("gifPath", gifLink);
-    }
     API.post("posts/post", formData)
       .then((res) => {
         console.log(res);
         dispatch(setPosts({ posts: [res.data, ...posts] }));
         setIsImage(false);
-        setIsGif(false);
         setImage(null);
         setPost("");
-        setGifLink(null);
       })
       .catch((err) => {
         console.log(err);
@@ -127,20 +122,12 @@ const MuPostWidget = ({ picturePath }) => {
           </DropZone>
         </Box>
       )}
-      {isGif && (
-        <Box mt="1rem" p="1rem">
-          <GifContainer setGifLink={setGifLink} gifLink={gifLink} />
-        </Box>
-      )}
       <Divider sx={{ margin: "1.25rem 0" }} />
       <FlexBoxBetween>
         <FlexBoxBetween
           gap="0.25rem"
           onClick={() => {
             setIsImage(!isImage);
-            setIsGif(false);
-            setImage(null);
-            setGifLink("");
           }}
         >
           <ImageOutlinedIcon sx={{ color: mediumMain }} />
@@ -151,26 +138,13 @@ const MuPostWidget = ({ picturePath }) => {
             Image
           </Typography>
         </FlexBoxBetween>
-        <FlexBoxBetween
-          gap="0.25rem"
-          onClick={() => {
-            setIsImage(false);
-            setIsGif(!isGif);
-            setImage(null);
-            setGifLink("");
-          }}
-        >
-          <GifBoxOutlined
-            sx={{
-              color: mediumMain,
-              "&:hover": { cursor: "pointer", color: medium },
-            }}
-          />
+        <FlexBoxBetween gap="0.25rem">
+          <GifBoxOutlined sx={{ color: mediumMain }} />
           <Typography
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
           >
-            Gif
+            Clip
           </Typography>
         </FlexBoxBetween>
         <FlexBoxBetween gap="0.25rem">

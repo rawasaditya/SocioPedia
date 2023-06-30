@@ -19,23 +19,21 @@ const App = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch();
   useEffect(() => {
-    function checkAuthentication() {
-      if (user?.token) {
-        API.get("/auth/isAuthenticated")
-          .then((res) => {
-            localStorage.setItem("user", JSON.stringify(res.data));
-            dispatch(setLogin(res.data));
-            setAuth(true);
-          })
-          .catch((err) => {
-            if (err.response.status === 403) {
-              dispatch(setLogout());
-              setAuth(false);
-            }
-          });
-      }
+    if (user?.token) {
+      API.get("/auth/isAuthenticated")
+        .then((res) => {
+          console.log(res.data);
+          localStorage.setItem("user", JSON.stringify(res.data));
+          dispatch(setLogin(res.data));
+          setAuth(true);
+        })
+        .catch((err) => {
+          if (err.response.status === 403) {
+            dispatch(setLogout());
+            setAuth(false);
+          }
+        });
     }
-    checkAuthentication();
   }, [isAuth]);
   return (
     <div className="app">

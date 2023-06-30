@@ -8,14 +8,12 @@ import UserImage from "../UserImage";
 import FlexBoxBetween from "../FlexBoxBetween";
 import WidgetWrapper from "../WidgetWrapper";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 const UserWidget = ({ user }) => {
   const { palette } = useTheme();
   const navigate = useNavigate();
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
-  const loggedInUser = useSelector((state) => state.user);
   const {
     firstName,
     lastName,
@@ -55,13 +53,9 @@ const UserWidget = ({ user }) => {
               </Typography>
               <Typography color={medium}>{friends.length} friends</Typography>
             </Box>
-            {loggedInUser?._id === user?._id ? (
-              <ManageAccountsOutlined
-                onClick={() => navigate(`/profile/${_id}`)}
-              />
-            ) : (
-              <></>
-            )}
+            <ManageAccountsOutlined
+              onClick={() => navigate(`/profile/${_id}`)}
+            />
           </Box>
         </Box>
         <Divider width="100%" />

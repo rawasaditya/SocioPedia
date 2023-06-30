@@ -2,14 +2,13 @@ import User from "../models/User.js";
 import Post from "../models/Post.js";
 export const createPosts = async (req, res) => {
   try {
-    const { userId, description, picturePath, pictureName, gifPath } = req.body;
+    const { userId, description, picturePath, pictureName } = req.body;
     const user = await User.findById(userId);
     const newPost = new Post({
       userId,
       description,
       picturePath,
       pictureName,
-      gifPath,
     });
     await newPost.save();
     const update = await newPost.populate(
@@ -25,8 +24,15 @@ export const getFeedsPosts = async (req, res) => {
   try {
     const posts = await Post.find()
       .sort({ createdAt: -1 })
-      .populate("userId", "_id firstName lastName email location picturePath");
+      .populate({
+        path: "userId",
+        select: ["_id", "firstName", "lastName", "email", "location", "picturePath"]})
+      .populate({
+        path: "comments",
+        select: ["description"]
+      })
     res.status(200).json(posts);
+    //console.log(posts);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -34,11 +40,17 @@ export const getFeedsPosts = async (req, res) => {
 export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
-    const posts = await Post.find({ userId }).populate(
-      "userId",
-      "_id firstName lastName email location picturePath"
-    );
+    const posts = await Post.find({ userId })
+    .populate({
+      path: "userId",
+      select: ["_id", "firstName", "lastName", "email", "location", "picturePath"]})
+    .populate({
+      path: "comments",
+      select: ["description"]
+    })
+    console.log(comments);
     res.json(posts);
+    console.log('posts');
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

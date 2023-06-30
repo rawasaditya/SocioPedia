@@ -18,8 +18,8 @@ import {
   Help,
   Menu,
   Close,
+  Notifications,
 } from "@mui/icons-material";
-import Notification from "./Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../state";
 import { useNavigate } from "react-router-dom";
@@ -82,7 +82,9 @@ const NavBar = () => {
           <IconButton>
             <Message sx={{ fontSize: "1.5rem" }} />
           </IconButton>
-          <Notification />
+          <IconButton>
+            <Notifications sx={{ fontSize: "1.5rem" }} />
+          </IconButton>
           <IconButton>
             <Help sx={{ fontSize: "1.5rem" }} />
           </IconButton>
@@ -151,7 +153,9 @@ const NavBar = () => {
             <IconButton>
               <Message sx={{ fontSize: "1.5rem" }} />
             </IconButton>
-            <Notification />
+            <IconButton>
+              <Notifications sx={{ fontSize: "1.5rem" }} />
+            </IconButton>
             <IconButton>
               <Help sx={{ fontSize: "1.5rem" }} />
             </IconButton>

@@ -47,21 +47,3 @@ export const addRemoveFriend = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
-
-export const searchFriends = async (req, res) => {
-  try {
-    const { searchText } = req.body;
-    const user = await User.find({
-      $expr: {
-        $regexMatch: {
-          input: { $concat: ["$firstName", " ", "$lastName"] },
-          regex: searchText,
-          options: "i",
-        },
-      },
-    }).select("-password");
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};

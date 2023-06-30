@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "../../state";
 import API from "../../axiosConfig.js";
-const FriendListWidget = ({ userId, loggedInUser, selfProfile = false }) => {
+const FriendListWidget = ({ userId }) => {
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const friends = useSelector((state) => state?.user?.friends);
@@ -42,8 +42,6 @@ const FriendListWidget = ({ userId, loggedInUser, selfProfile = false }) => {
                 name={`${friend.firstName} ${friend.lastName}`}
                 userPicturePath={friend.picturePath}
                 subTitle={friend.location}
-                loggedInUser={loggedInUser}
-                selfProfile={selfProfile}
               />
             </>
           );

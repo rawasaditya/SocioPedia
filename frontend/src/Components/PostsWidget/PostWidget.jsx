@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ChatBubbleOutlineOutlined,
   FavoriteBorderOutlined,
   FavoriteOutlined,
+  ShareOutlined,
 } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBoxBetween from "../FlexBoxBetween";
@@ -12,23 +13,72 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../../state";
 import API from "../../axiosConfig.js";
 import { assets } from "../../constUtils.js";
+import {
+  InputBase,
+  Button,
+} from "@mui/material";
+import axios from "axios";
 const PostWidget = ({
   _id,
   userId,
   likes,
   description,
   picturePath,
+  pictureName,
   comments,
-  gifPath,
+  createdAt,
+  updatedAt,
 }) => {
   const [isComments, setIsComments] = useState(false);
+  const [addComment, setAddComment] = useState(false);
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = likes.includes(loggedInUserId);
   const likeCount = Object.keys(likes).length;
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.token);
   const { palette } = useTheme();
+  const primaryLight = palette.primary.light;
+  const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
+  const medium = palette.neutral.medium;
   const primary = palette.primary.main;
+  const [commentInput, setComment] = useState("");
+
+  useEffect(() => {
+    if(comments != null) 
+    {
+      setIsComments(true);
+    }
+    }, [""]);
+
+  const postComment = async () => {
+    //Array for Comment Ref
+    let listOfCommentIds = [];
+    for(let i = 0; i < comments.length; i++)
+    {
+      listOfCommentIds.push(comments[i]._id);
+    }
+
+    var body = {
+      postId: _id,
+      listOfCommentIds: listOfCommentIds,
+      description: commentInput
+    }
+
+    // axios.post("http://localhost:5002/api/v1/comments/postcomment", body)
+    // .then(async (res) => {
+    //   console.log(res)
+    // })
+    API.post("comments/postcomment", body)
+      .then(async (res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+    });
+
+    setAddComment(true);
+  };
 
   const patchLike = async () => {
     //
@@ -36,10 +86,11 @@ const PostWidget = ({
       .then((data) => {
         dispatch(setPost({ post: data.data }));
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
+
+  
+  
 
   return (
     <WidgetWrapper m="2rem 0">
@@ -58,16 +109,6 @@ const PostWidget = ({
           width="100%"
           height="auto"
           src={`${assets}/${picturePath}`}
-          alt="post"
-          style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-        />
-      )}
-
-      {gifPath && (
-        <img
-          width="100%"
-          height="auto"
-          src={gifPath}
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
         />
@@ -98,9 +139,37 @@ const PostWidget = ({
           </FlexBoxBetween>
         </FlexBoxBetween>
       </FlexBoxBetween>
+
+      <br></br>
+      {/* Comment Input */}
+      <FlexBoxBetween gap="1.5rem">
+            <InputBase
+              placeholder="Add a Comment"
+              className="comment"
+              onChange={(e) => setComment(e.target.value)}
+              value={commentInput}
+              sx={{
+                width: "100%",
+                backgroundColor: palette.neutral.light,
+                borderRadius: "2rem",
+                padding: "1rem 2rem",
+              }}
+            />
+      </FlexBoxBetween><br></br>
+          <Button
+            onClick={() => {
+              postComment();
+            }}
+            sx={{
+              color: palette.background.alt,
+              backgroundColor: palette.primary.main,
+              borderRadius: "3rem",
+            }}
+          >Add Comment</Button>
       {isComments && (
         <Box mt="0.5rem">
-          {comments.map((comment) => {
+          {comments.map((comment, i) => {
+            return (
             <Box key={comment._id}>
               <Divider />
               <Typography
@@ -110,10 +179,27 @@ const PostWidget = ({
                   pl: "1rem",
                 }}
               >
-                {comment}
+                {comment.description}
               </Typography>
-            </Box>;
+            </Box>)
           })}
+        </Box>
+      )}
+      {addComment && (
+        <Box mt="0.5rem">
+            <Box>
+              <Divider />
+              <Typography
+                sx={{
+                  color: main,
+                  m: "0.5rem 0",
+                  pl: "1rem",
+                }}
+              >
+                {commentInput}
+              </Typography>
+            </Box>
+
         </Box>
       )}
     </WidgetWrapper>

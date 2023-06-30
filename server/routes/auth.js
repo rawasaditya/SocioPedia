@@ -1,5 +1,5 @@
 import express from "express";
-import { login, register, logout } from "../controllers/auth.js";
+import { login, register } from "../controllers/auth.js";
 import { verifyToken } from "../middleware/auth.js";
 import { upload } from "../utils/fileUploadUtils.js";
 import { getUser } from "../controllers/users.js";
@@ -9,7 +9,6 @@ const router = express.Router();
 
 router.post("/register", upload.single("picture"), register);
 router.post("/login", login);
-router.get("/logout", logout);
 router.get("/isAuthenticated", verifyToken, async (req, res) => {
   const token = req.headers.authorization;
   const user = await User.findById(req.user.id)

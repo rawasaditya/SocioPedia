@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import API from "../axiosConfig";
+
 const initialState = {
   mode: "light",
   user: null,
@@ -18,10 +18,7 @@ export const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
     },
-    setLogout: async (state) => {
-      localStorage.removeItem("user");
-      await API.get("/auth/logout");
-      window.location.href = "/";
+    setLogout: (state) => {
       state.user = null;
       state.token = null;
     },
