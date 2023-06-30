@@ -2,13 +2,14 @@ import User from "../models/User.js";
 import Post from "../models/Post.js";
 export const createPosts = async (req, res) => {
   try {
-    const { userId, description, picturePath, pictureName } = req.body;
+    const { userId, description, picturePath, pictureName, gifPath } = req.body;
     const user = await User.findById(userId);
     const newPost = new Post({
       userId,
       description,
       picturePath,
       pictureName,
+      gifPath,
     });
     await newPost.save();
     const update = await newPost.populate(
