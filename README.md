@@ -14,8 +14,10 @@
 
 # SocioPedia
 
-Simple opensource social media platform, this platform will mark its wonder over all social media platform in world.
-
+This is beginner frinedly open source project focused of MERN stack. This porject is started keeping in mind to help new developers to get started with opensource, project also holds potential to grow along with its contributors.
+This project has to stay for long period of time so that more ISSUES, ENHANCEMENTS, IDEAS can be included with in long run and developed accordingly.
+More milestone we acchive more we grow this platform.
+Become part of community and **LET US TOGETHER MAKE SOCIAL MEDIA GREAT AGAIN**
 
 ## Getting started
 
