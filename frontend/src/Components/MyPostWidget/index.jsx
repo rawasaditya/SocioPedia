@@ -25,7 +25,7 @@ import API from "../../axiosConfig.js";
 const MuPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
   const [isImage, setIsImage] = useState(false);
-  const [isGif, setIsGif] = useState(true);
+  const [isGif, setIsGif] = useState(false);
   const [gifLink, setGifLink] = useState("");
   const [image, setImage] = useState(null);
   const [post, setPost] = useState("");
