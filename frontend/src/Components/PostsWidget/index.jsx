@@ -35,6 +35,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
           comments,
           createdAt,
           updatedAt,
+          gifPath,
         }) => {
           return (
             <PostWidget
@@ -48,6 +49,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
               comments={comments}
               createdAt={createdAt}
               updatedAt={updatedAt}
+              gifPath={gifPath}
             />
           );
         }

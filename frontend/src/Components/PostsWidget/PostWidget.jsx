@@ -19,6 +19,7 @@ const PostWidget = ({
   description,
   picturePath,
   comments,
+  gifPath,
 }) => {
   const [isComments, setIsComments] = useState(false);
   const loggedInUserId = useSelector((state) => state.user._id);
@@ -57,6 +58,16 @@ const PostWidget = ({
           width="100%"
           height="auto"
           src={`${assets}/${picturePath}`}
+          alt="post"
+          style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
+        />
+      )}
+
+      {gifPath && (
+        <img
+          width="100%"
+          height="auto"
+          src={gifPath}
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
         />
