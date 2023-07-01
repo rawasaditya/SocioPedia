@@ -1,4 +1,6 @@
 import User from "../models/User.js";
+import Notif from "../models/Notif.js"
+
 export const getUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -34,7 +36,20 @@ export const addRemoveFriend = async (req, res) => {
     } else {
       user.friends.push(friendsId);
       friend.friends.push(id);
+
+      // Create notification
+      const notif = new Notif({
+        userID: friendsId,
+        initiator: id,
+        description: `${user.firstName} ${user.lastName} sent you a friend request`
+      })
+    
+      return await notif.save({
+        validateBeforeSave: true
+      })
+      .catch(e => { console.log(e) })
     }
+    
     await user.save();
     const updatedUser = await user.populate(
       "friends",

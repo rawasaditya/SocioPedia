@@ -1,5 +1,7 @@
 import User from "../models/User.js";
 import Post from "../models/Post.js";
+import Notif from "../models/Notif.js";
+
 export const createPosts = async (req, res) => {
   try {
     const { userId, description, picturePath, pictureName, gifPath } = req.body;
