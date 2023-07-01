@@ -31,6 +31,26 @@ export const createNotif = async (req, res) => {
   .catch(e => { throw e })
 }
 
+export const listNotifs = async (req, res) => {
+  const pageNumber = (req.params.page) ? req.params.page : 1
+  const pageSize = 5
+
+  if (req.query.userID) {
+    const result  = await Notif
+      .find({ userID: req.query.userID })
+      .skip((pageNumber - 1) * pageSize)
+      .sort({date: -1})
+      .limit(pageSize)
+      .select({
+        userID: 1, initiator: 1, description: 1, isRead: 1, date: 1
+      })
+
+    res.send(result)
+  } else {
+    res.status(400).send({ status: 'error', message: 'UserID is required.' })
+  }
+}
+
 function validate(data, validation) {
   const schema = Joi.object(validation)
 
