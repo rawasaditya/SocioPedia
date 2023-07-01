@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { ThemeProvider } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import NavBar from "./Components/NavBar";
 import Home from "./scenes/Home";
@@ -7,7 +9,6 @@ import Profile from "./scenes/Profile";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogout, setLogin } from "./state";
 import { useMemo } from "react";
-import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme.js";
 import API from "./axiosConfig.js";
