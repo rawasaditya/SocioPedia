@@ -26,7 +26,7 @@ const UserWidget = ({ user }) => {
     linkedIn,
     twitter,
     instagram,
-    _id,
+    // _id,
   } = user;
   return (
     <WidgetWrapper>
@@ -44,9 +44,9 @@ const UserWidget = ({ user }) => {
                 variant="h4"
                 color={dark}
                 fontWeight="5000"
+                onClick={() => navigate(`/profile/${user?._id}`)}
                 sx={{
-                  "&hover": {
-                    color: palette.primary.light,
+                  "&:hover": {
                     cursor: "pointer",
                   },
                 }}
@@ -55,13 +55,6 @@ const UserWidget = ({ user }) => {
               </Typography>
               <Typography color={medium}>{friends.length} friends</Typography>
             </Box>
-            {loggedInUser?._id === user?._id ? (
-              <ManageAccountsOutlined
-                onClick={() => navigate(`/profile/${_id}`)}
-              />
-            ) : (
-              <></>
-            )}
           </Box>
         </Box>
         <Divider width="100%" />
