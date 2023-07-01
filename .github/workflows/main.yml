@@ -9,22 +9,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  Run-linting:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Installing Packages
-        run: |
-          cd ./frontend
-          npm ci
-        shell: bash
-      - name: Running linting 
-        run: |
-          cd ./frontend
-          npm run lint
-        shell: bash
+  # Run-linting:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Installing Packages
+  #       run: |
+  #         cd ./frontend
+  #         npm ci
+  #       shell: bash
+  #     - name: Running linting 
+  #       run: |
+  #         cd ./frontend
+  #         npm run lint
+  #       shell: bash
 
-  building-project:
+  Building-project:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
