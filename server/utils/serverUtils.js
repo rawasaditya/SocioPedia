@@ -9,6 +9,7 @@ import packageJson from "../package.json" assert { type: "json" };
 import mongoose from "mongoose";
 import userRoutes from "../routes/users.js";
 import postRoutes from "../routes/posts.js";
+import notifRoutes from "../routes/notifs.js";
 import Users from "../models/User.js";
 import Post from "../models/Post.js";
 import cors from "cors";
@@ -31,6 +32,7 @@ export const initRoutes = (app) => {
   app.use(`${API_VERSION}/auth`, authRoutes);
   app.use(`${API_VERSION}/user`, userRoutes);
   app.use(`${API_VERSION}/posts`, postRoutes);
+  app.use(`${API_VERSION}/notifications`, notifRoutes);
 };
 
 export const initDB = (app) => {
