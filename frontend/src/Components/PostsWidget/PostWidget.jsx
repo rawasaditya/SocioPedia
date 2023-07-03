@@ -43,25 +43,26 @@ const PostWidget = ({
   const medium = palette.neutral.medium;
   const primary = palette.primary.main;
   const [commentInput, setComment] = useState("");
+  const [localComments, setArray] = useState([]);
 
   useEffect(() => {
     if(comments != null) 
     {
       setIsComments(true);
-    }
-    }, [""]);
+    }}, [""]);
 
   const postComment = async () => {
-    //Array for Comment Ref
-    let listOfCommentIds = [];
-    for(let i = 0; i < comments.length; i++)
-    {
-      listOfCommentIds.push(comments[i]._id);
-    }
+
+    setArray([
+      ...localComments,
+      {
+        id: localComments.length,
+        name: commentInput
+      }
+    ])
 
     var body = {
       postId: _id,
-      listOfCommentIds: listOfCommentIds,
       description: commentInput
     }
 
@@ -168,7 +169,7 @@ const PostWidget = ({
           >Add Comment</Button>
       {isComments && (
         <Box mt="0.5rem">
-          {comments.map((comment, i) => {
+          {comments.map((comment) => {
             return (
             <Box key={comment._id}>
               <Divider />
@@ -187,6 +188,8 @@ const PostWidget = ({
       )}
       {addComment && (
         <Box mt="0.5rem">
+            {localComments.map((localComment, i) => {
+            return (
             <Box>
               <Divider />
               <Typography
@@ -196,9 +199,10 @@ const PostWidget = ({
                   pl: "1rem",
                 }}
               >
-                {commentInput}
+                {localComment.name}
               </Typography>
-            </Box>
+            </Box>)
+          })}
 
         </Box>
       )}
