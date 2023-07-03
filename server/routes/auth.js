@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/register", upload.single("picture"), register);
 router.post("/login", login);
 router.get("/logout", logout);
-router.patch('/update',verifyToken,UpdateUser)
+router.patch('/:id/update',verifyToken,UpdateUser)
 router.get("/isAuthenticated", verifyToken, async (req, res) => {
   const token = req.headers.authorization;
   const user = await User.findById(req.user.id)

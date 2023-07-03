@@ -53,14 +53,16 @@ export const UpdateUser=async(req,res)=>{
       Twitter,
       Instagram
     }=req.body;
+    console.log(req.body)
     const {id}=req.params;
-    const update =await User.update({id:id},
+    console.log(id)
+    const update =await User.findOneAndUpdate({_id:id},
       {$set:{
         picturePath:picturePath,
         occupation:occupation,
         linkedIn:linkedIn,
-        Twitter:Twitter,
-        Instagram:Instagram
+        twitter:Twitter,
+        instagram:Instagram
       }})
     res.status(201).json(update)
   }catch(err){

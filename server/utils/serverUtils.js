@@ -28,6 +28,7 @@ export const initMiddleWare = (app) => {
 };
 
 export const initRoutes = (app) => {
+  console.log(packageJson.version)
   const API_VERSION = `/api/v${packageJson.version}`;
   app.use(`${API_VERSION}/auth`, authRoutes);
   app.use(`${API_VERSION}/user`, userRoutes);
