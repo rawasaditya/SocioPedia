@@ -44,6 +44,30 @@ export const register = async (req, res) => {
   }
 };
 
+export const UpdateUser=async(req,res)=>{
+  try{
+    const {
+      picturePath,
+      occupation,
+      linkedIn,
+      Twitter,
+      Instagram
+    }=req.body;
+    const {id}=req.params;
+    const update =await User.update({id:id},
+      {$set:{
+        picturePath:picturePath,
+        occupation:occupation,
+        linkedIn:linkedIn,
+        Twitter:Twitter,
+        Instagram:Instagram
+      }})
+    res.status(201).json(update)
+  }catch(err){
+    res.status(500).json({ error: err.message });
+  }
+}
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;

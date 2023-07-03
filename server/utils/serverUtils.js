@@ -34,7 +34,9 @@ export const initRoutes = (app) => {
   app.use(`${API_VERSION}/posts`, postRoutes);
   app.use(`${API_VERSION}/notifications`, notifRoutes);
 };
-
+process.env.API_PORT=5002 
+process.env.MONGO_URL="mongodb://127.0.0.1:27017/socialMedia"
+//  process.env.JWT_SECRET=4PJqnalPar
 export const initDB = (app) => {
   const PORT = process.env.API_PORT;
   mongoose
