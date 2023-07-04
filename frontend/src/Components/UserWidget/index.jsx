@@ -3,19 +3,24 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { Box, Typography, Divider, useTheme, Link } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Divider,
+  useTheme,
+  Link,
+  IconButton,
+} from "@mui/material";
 import UserImage from "../UserImage";
 import FlexBoxBetween from "../FlexBoxBetween";
 import WidgetWrapper from "../WidgetWrapper";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-const UserWidget = ({ user }) => {
+const UserWidget = ({ user, selfProfile }) => {
   const { palette } = useTheme();
   const navigate = useNavigate();
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
-  const loggedInUser = useSelector((state) => state.user);
   const {
     firstName,
     lastName,
@@ -56,6 +61,11 @@ const UserWidget = ({ user }) => {
               <Typography color={medium}>{friends.length} friends</Typography>
             </Box>
           </Box>
+          {selfProfile && (
+            <IconButton>
+              <ManageAccountsOutlined />
+            </IconButton>
+          )}
         </Box>
         <Divider width="100%" />
         <Box p="1rem 0" width="100%">
