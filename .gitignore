@@ -1,6 +1,6 @@
 server/node_modules/
 frontend/node_modules/
-
+.vscode
 server/.env
 server/public/assets/
 # frontend/src/utils.js

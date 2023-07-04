@@ -46,6 +46,7 @@ const App = () => {
           <CssBaseline />
           <Routes>
             <Route path="/" element={<Login isAuth={isAuth} />} />
+            <Route path="/" element={<Profile  />} />
             <Route
               path="/home"
               element={isAuth === true ? <Home /> : <Navigate to="/" />}
