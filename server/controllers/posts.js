@@ -25,7 +25,13 @@ export const getFeedsPosts = async (req, res) => {
   try {
     const posts = await Post.find()
       .sort({ createdAt: -1 })
-      .populate("userId", "_id firstName lastName email location picturePath");
+      .populate({
+        path: "userId",
+        select: ["_id", "firstName", "lastName", "email", "location", "picturePath"]})
+      .populate({
+        path: "comments",
+        select: ["description"]
+      })
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -34,10 +40,14 @@ export const getFeedsPosts = async (req, res) => {
 export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
-    const posts = await Post.find({ userId }).populate(
-      "userId",
-      "_id firstName lastName email location picturePath"
-    );
+    const posts = await Post.find({ userId })
+    .populate({
+      path: "userId",
+      select: ["_id", "firstName", "lastName", "email", "location", "picturePath"]})
+    .populate({
+      path: "comments",
+      select: ["description"]
+    })
     res.json(posts);
   } catch (err) {
     res.status(500).json({ message: err.message });
