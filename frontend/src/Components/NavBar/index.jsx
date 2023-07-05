@@ -37,9 +37,15 @@ const NavBar = () => {
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
-  const [SearchInput, setSearchInput] = useState(false);
-  const fullName = `${user?.firstName ? user?.firstName : ""} ${user?.lastName ? user?.lastName : ""
-    }`;
+  const [SearchInput, setSearchInput] = useState(null);
+  const fullName = `${user?.firstName ? user?.firstName : ""} ${
+    user?.lastName ? user?.lastName : ""
+  }`;
+  document.addEventListener("click", () => {
+    if (SearchInput) {
+      setSearchInput("");
+    }
+  });
   return (
     <FlexBoxBetween padding="1rem 6%" backgroundColor={alt}>
       <Typography
@@ -63,7 +69,11 @@ const NavBar = () => {
           gap="3rem"
           padding="0.1rem 1.5rem"
         >
-          <InputBase placeholder="Search" onChange={(e) => console.log(e.target.value)} />
+          <InputBase
+            placeholder="Search"
+            onChange={(e) => setSearchInput(e.target.value)}
+            value={SearchInput}
+          />
           <IconButton>
             <Search />
           </IconButton>
@@ -71,11 +81,8 @@ const NavBar = () => {
             backgroundColor={neutralLight}
             borderRadius={"0.5rem"}
             gap="3rem"
-            padding="0.1rem 1.5rem"
-            position='absolute'
-            top='70px'
-            maxWidth='230px'
-            width='100%'
+            position="absolute"
+            top="5rem"
           >
             <SearchDropDown value={SearchInput} />
           </FlexBoxBetween>
