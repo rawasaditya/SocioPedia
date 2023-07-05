@@ -1,12 +1,37 @@
-import { Box } from "@mui/material";
-import React from "react";
-function SearchDropDown(props) {
+import { Paper, Box } from "@mui/material";
+import { useEffect, useState } from "react";
+import SearchDropDownItem from "./SearchDropDownItem";
+import API from "../../axiosConfig.js";
+function SearchDropDown({ value }) {
+  const [results, setResults] = useState([]);
+  useEffect(() => {
+    if (value?.length) {
+      API.post("user/search", { searchText: value }).then((res) => {
+        setResults(res.data);
+      });
+    } else {
+      setResults([]);
+    }
+  }, [value]);
   return (
-    <div>
-      {/* <Box sx={{ pt: 1, pb: 1 }}>example</Box>
-			<Box sx={{ pt: 1, pb: 1 }}>hello</Box>
-			<Box sx={{ pt: 1, pb: 1 }}>grEAT1</Box> */}
-    </div>
+    <Paper
+      sx={{
+        zIndex: 1,
+      }}
+    >
+      {results.map((i) => (
+        <Box
+          sx={{ width: "30rem", maxWidth: "100%", padding: "0.2rem 0" }}
+          key={i._id}
+        >
+          <SearchDropDownItem
+            name={`${i.firstName} ${i.lastName}`}
+            picture={i.picturePath}
+            _id={i._id}
+          />
+        </Box>
+      ))}
+    </Paper>
   );
 }
 export default SearchDropDown;
