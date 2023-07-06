@@ -39,10 +39,10 @@ const PostWidget = ({
   const [localComments, setArray] = useState([]);
 
   useEffect(() => {
-    if(comments != null) 
-    {
+    if (comments != null) {
       setIsComments(true);
-    }}, [""]);
+    }
+  }, [""]);
 
   const postComment = async () => {
 
@@ -69,7 +69,7 @@ const PostWidget = ({
       })
       .catch((err) => {
         console.log(err);
-    });
+      });
 
     setAddComment(true);
   };
@@ -116,7 +116,7 @@ const PostWidget = ({
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
         />
       )}
-      <FlexBoxBetween mt="0.25rem">
+      <FlexBoxBetween mb="0.25rem">
         <FlexBoxBetween
           gap="1rem"
           sx={{
@@ -143,20 +143,26 @@ const PostWidget = ({
         </FlexBoxBetween>
       </FlexBoxBetween>
 
-      <FlexBoxBetween gap="1.5rem">
-            <InputBase
-              placeholder="Add a Comment"
-              className="comment"
-              onChange={(e) => setComment(e.target.value)}
-              value={commentInput}
-              sx={{
-                width: "100%",
-                backgroundColor: palette.neutral.light,
-                borderRadius: "2rem",
-                padding: "1rem 2rem",
-              }}
-            />
-      </FlexBoxBetween><br></br>
+      {isComments && (<>
+        <FlexBoxBetween
+          gap="1rem"
+          sx={{
+            alignItems: "stretch",
+            mb: "1rem"
+          }}
+        >
+          <InputBase
+            placeholder="Add a Comment"
+            className="comment"
+            onChange={(e) => setComment(e.target.value)}
+            value={commentInput}
+            sx={{
+              width: "100%",
+              backgroundColor: palette.neutral.light,
+              borderRadius: "2rem",
+              padding: "0.5rem 1rem",
+            }}
+          />
           <Button
             onClick={() => {
               postComment();
@@ -165,48 +171,50 @@ const PostWidget = ({
               color: palette.background.alt,
               backgroundColor: palette.primary.main,
               borderRadius: "3rem",
+              paddingInline: "1rem",
             }}
-          >Add Comment</Button>
+          >Comment</Button>
+        </FlexBoxBetween>
 
-      {isComments && (
         <Box mt="0.5rem">
+          <Divider />
           {comments.map((comment) => {
             return (
-            <Box key={comment._id}>
-              <Divider />
-              <Typography
-                sx={{
-                  color: main,
-                  m: "0.5rem 0",
-                  pl: "1rem",
-                }}
-              >
-                {comment.description}
-              </Typography>
-            </Box>)
+              <Box key={comment._id}>
+                <Typography
+                  sx={{
+                    color: main,
+                    m: "0.5rem 0",
+                    pl: "1rem",
+                  }}
+                >
+                  {comment.description}
+                </Typography>
+                <Divider />
+              </Box>)
           })}
         </Box>
-      )}
-      {addComment && (
+      </>)}
+      {addComment && (<>
+        {!isComments && <Divider />}
         <Box mt="0.5rem">
-            {localComments.map((localComment, i) => {
+          {localComments.map((localComment, i) => {
             return (
-            <Box>
-              <Divider />
-              <Typography
-                sx={{
-                  color: main,
-                  m: "0.5rem 0",
-                  pl: "1rem",
-                }}
-              >
-                {localComment.name}
-              </Typography>
-            </Box>)
+              <Box>
+                <Typography
+                  sx={{
+                    color: main,
+                    m: "0.5rem 0",
+                    pl: "1rem",
+                  }}
+                >
+                  {localComment.name}
+                </Typography>
+                <Divider />
+              </Box>)
           })}
-
         </Box>
-      )}
+      </>)}
     </WidgetWrapper>
   );
 };
