@@ -12,10 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../../state";
 import API from "../../axiosConfig.js";
 import { assets } from "../../constUtils.js";
-import {
-  InputBase,
-  Button,
-} from "@mui/material";
+import { InputBase, Button } from "@mui/material";
 import axios from "axios";
 const PostWidget = ({
   _id,
@@ -45,27 +42,22 @@ const PostWidget = ({
   }, [""]);
 
   const postComment = async () => {
-
     setArray([
       ...localComments,
       {
         id: localComments.length,
-        name: commentInput
-      }
-    ])
+        name: commentInput,
+      },
+    ]);
 
     var body = {
       postId: _id,
-      description: commentInput
-    }
+      description: commentInput,
+    };
 
-    // axios.post("http://localhost:5002/api/v1/comments/postcomment", body)
-    // .then(async (res) => {
-    //   console.log(res)
-    // })
     API.post("comments/postcomment", body)
       .then(async (res) => {
-        console.log(res);
+        setComment("");
       })
       .catch((err) => {
         console.log(err);
@@ -138,83 +130,94 @@ const PostWidget = ({
             <IconButton onClick={() => setIsComments((prev) => !prev)}>
               <ChatBubbleOutlineOutlined />
             </IconButton>
-            <Typography>{comments.length}</Typography>
+            <Typography>{comments.length + localComments.length}</Typography>
           </FlexBoxBetween>
         </FlexBoxBetween>
       </FlexBoxBetween>
 
-      {isComments && (<>
-        <FlexBoxBetween
-          gap="1rem"
-          sx={{
-            alignItems: "stretch",
-            mb: "1rem"
-          }}
-        >
-          <InputBase
-            placeholder="Add a Comment"
-            className="comment"
-            onChange={(e) => setComment(e.target.value)}
-            value={commentInput}
+      {!isComments && (
+        <>
+          <FlexBoxBetween
+            gap="1rem"
             sx={{
-              width: "100%",
-              backgroundColor: palette.neutral.light,
-              borderRadius: "2rem",
-              padding: "0.5rem 1rem",
+              alignItems: "stretch",
+              mb: "1rem",
             }}
-          />
-          <Button
-            onClick={() => {
-              postComment();
-            }}
-            sx={{
-              color: palette.background.alt,
-              backgroundColor: palette.primary.main,
-              borderRadius: "3rem",
-              paddingInline: "1rem",
-            }}
-          >Comment</Button>
-        </FlexBoxBetween>
+          >
+            <InputBase
+              placeholder="Add a Comment"
+              className="comment"
+              onChange={(e) => setComment(e.target.value)}
+              onKeyPress={(e) => {
+                console.log(e.which === 13 ? postComment() : null);
+              }}
+              value={commentInput}
+              sx={{
+                width: "100%",
+                backgroundColor: palette.neutral.light,
+                borderRadius: "2rem",
+                padding: "0.5rem 1rem",
+              }}
+            />
+            <Button
+              onClick={() => {
+                postComment();
+              }}
+              sx={{
+                color: palette.background.alt,
+                backgroundColor: palette.primary.main,
+                borderRadius: "3rem",
+                paddingInline: "1rem",
+              }}
+            >
+              Comment
+            </Button>
+          </FlexBoxBetween>
 
-        <Box mt="0.5rem">
-          <Divider />
-          {comments.map((comment) => {
-            return (
-              <Box key={comment._id}>
-                <Typography
-                  sx={{
-                    color: main,
-                    m: "0.5rem 0",
-                    pl: "1rem",
-                  }}
-                >
-                  {comment.description}
-                </Typography>
-                <Divider />
-              </Box>)
-          })}
-        </Box>
-      </>)}
-      {addComment && (<>
-        {!isComments && <Divider />}
-        <Box mt="0.5rem">
-          {localComments.map((localComment, i) => {
-            return (
-              <Box>
-                <Typography
-                  sx={{
-                    color: main,
-                    m: "0.5rem 0",
-                    pl: "1rem",
-                  }}
-                >
-                  {localComment.name}
-                </Typography>
-                <Divider />
-              </Box>)
-          })}
-        </Box>
-      </>)}
+          <Box mt="0.5rem">
+            <Divider />
+            {comments.map((comment) => {
+              return (
+                <Box key={comment._id}>
+                  <Typography
+                    sx={{
+                      color: main,
+                      m: "0.5rem 0",
+                      pl: "1rem",
+                    }}
+                  >
+                    {comment.description}
+                  </Typography>
+                  <Divider />
+                </Box>
+              );
+            })}
+          </Box>
+          {addComment && (
+            <>
+              {!isComments && <Divider />}
+              <Box mt="0.5rem">
+                {localComments.map((localComment, idx) => {
+                  return (
+                    <Box key={idx}>
+                      <Typography
+                        sx={{
+                          color: main,
+                          m: "0.5rem 0",
+                          pl: "1rem",
+                        }}
+                      >
+                        {localComment.name}
+                      </Typography>
+                      <Divider />
+                    </Box>
+                  );
+                })}
+              </Box>
+            </>
+          )}
+        </>
+      )}
     </WidgetWrapper>
   );
 };
