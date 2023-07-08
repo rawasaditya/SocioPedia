@@ -27,11 +27,30 @@ export const getFeedsPosts = async (req, res) => {
       .sort({ createdAt: -1 })
       .populate({
         path: "userId",
-        select: ["_id", "firstName", "lastName", "email", "location", "picturePath"]})
+        select: [
+          "_id",
+          "firstName",
+          "lastName",
+          "email",
+          "location",
+          "picturePath",
+        ],
+      })
       .populate({
         path: "comments",
-        select: ["description"]
-      })
+        select: ["description"],
+        populate: {
+          path: "userId",
+          select: [
+            "_id",
+            "firstName",
+            "lastName",
+            "email",
+            "location",
+            "picturePath",
+          ],
+        },
+      });
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -41,13 +60,32 @@ export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
     const posts = await Post.find({ userId })
-    .populate({
-      path: "userId",
-      select: ["_id", "firstName", "lastName", "email", "location", "picturePath"]})
-    .populate({
-      path: "comments",
-      select: ["description"]
-    })
+      .populate({
+        path: "userId",
+        select: [
+          "_id",
+          "firstName",
+          "lastName",
+          "email",
+          "location",
+          "picturePath",
+        ],
+      })
+      .populate({
+        path: "comments",
+        select: ["description"],
+        populate: {
+          path: "userId",
+          select: [
+            "_id",
+            "firstName",
+            "lastName",
+            "email",
+            "location",
+            "picturePath",
+          ],
+        },
+      });
     res.json(posts);
   } catch (err) {
     res.status(500).json({ message: err.message });

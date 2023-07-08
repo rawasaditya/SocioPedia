@@ -138,7 +138,6 @@ const PostWidget = ({
       {!isComments && (
         <>
           <FlexBoxBetween
-            gap="1rem"
             sx={{
               alignItems: "stretch",
               mb: "1rem",
@@ -155,7 +154,6 @@ const PostWidget = ({
               sx={{
                 width: "100%",
                 backgroundColor: palette.neutral.light,
-                borderRadius: "2rem",
                 padding: "0.5rem 1rem",
               }}
             />
@@ -166,8 +164,8 @@ const PostWidget = ({
               sx={{
                 color: palette.background.alt,
                 backgroundColor: palette.primary.main,
-                borderRadius: "3rem",
                 paddingInline: "1rem",
+                paddingTop: "0.5rem 1rem",
               }}
             >
               Comment
