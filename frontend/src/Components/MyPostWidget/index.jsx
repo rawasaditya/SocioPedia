@@ -133,7 +133,11 @@ const MuPostWidget = ({ picturePath }) => {
         </Box>
       )}
       <Divider sx={{ margin: "1.25rem 0" }} />
-      <FlexBoxBetween>
+      <FlexBoxBetween
+        sx={{
+          justifyContent: "space-around",
+        }}
+      >
         <FlexBoxBetween
           gap="0.25rem"
           onClick={() => {
@@ -171,15 +175,6 @@ const MuPostWidget = ({ picturePath }) => {
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
           >
             Gif
-          </Typography>
-        </FlexBoxBetween>
-        <FlexBoxBetween gap="0.25rem">
-          <AttachFileOutlined sx={{ color: mediumMain }} />
-          <Typography
-            color={mediumMain}
-            sx={{ "&:hover": { cursor: "pointer", color: medium } }}
-          >
-            Attachment
           </Typography>
         </FlexBoxBetween>
         <Button
