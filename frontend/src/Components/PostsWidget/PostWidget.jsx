@@ -8,12 +8,12 @@ import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
 import FlexBoxBetween from "../FlexBoxBetween";
 import Friend from "../Friend";
 import WidgetWrapper from "../WidgetWrapper";
+import UserImage from "../UserImage";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../../state";
 import API from "../../axiosConfig.js";
 import { assets } from "../../constUtils.js";
 import { InputBase, Button } from "@mui/material";
-import axios from "axios";
 const PostWidget = ({
   _id,
   userId,
@@ -25,13 +25,15 @@ const PostWidget = ({
 }) => {
   const [isComments, setIsComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
-  const loggedInUserId = useSelector((state) => state.user._id);
+  const loggedInUser = useSelector((state) => state.user);
+  const loggedInUserId = loggedInUser._id;
   const isLiked = likes.includes(loggedInUserId);
   const likeCount = Object.keys(likes).length;
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
+  const medium = palette.neutral.medium;
   const [commentInput, setComment] = useState("");
   const [localComments, setArray] = useState([]);
 
@@ -173,20 +175,38 @@ const PostWidget = ({
           </FlexBoxBetween>
 
           <Box mt="0.5rem">
-            <Divider />
             {comments.map((comment) => {
               return (
-                <Box key={comment._id}>
-                  <Typography
-                    sx={{
-                      color: main,
-                      m: "0.5rem 0",
-                      pl: "1rem",
-                    }}
-                  >
-                    {comment.description}
-                  </Typography>
-                  <Divider />
+                <Box
+                  key={comment._id}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    borderBottom: `1px solid #eee`,
+                    py: "0.5rem",
+                  }}
+                >
+                  <UserImage image={comment.userId.picturePath} size="2.5rem" />
+                  <div>
+                    <Typography
+                      sx={{
+                        color: medium,
+                        m: "0.5rem 0 0 0",
+                        pl: "1rem",
+                      }}
+                    >
+                      {`${comment.userId.firstName} ${comment.userId.lastName}`}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: main,
+                        m: "0 0 0.5rem 0",
+                        pl: "1rem",
+                      }}
+                    >
+                      {comment.description}
+                    </Typography>
+                  </div>
                 </Box>
               );
             })}
@@ -197,17 +217,39 @@ const PostWidget = ({
               <Box mt="0.5rem">
                 {localComments.map((localComment, idx) => {
                   return (
-                    <Box key={idx}>
-                      <Typography
-                        sx={{
-                          color: main,
-                          m: "0.5rem 0",
-                          pl: "1rem",
-                        }}
-                      >
-                        {localComment.name}
-                      </Typography>
-                      <Divider />
+                    <Box
+                      key={idx}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        borderBottom: `1px solid #eee`,
+                        py: "0.5rem",
+                      }}
+                    >
+                      <UserImage
+                        image={loggedInUser.picturePath}
+                        size="2.5rem"
+                      />
+                      <div>
+                        <Typography
+                          sx={{
+                            color: medium,
+                            m: "0.5rem 0 0 0",
+                            pl: "1rem",
+                          }}
+                        >
+                          {`${loggedInUser.firstName} ${loggedInUser.lastName}`}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: main,
+                            m: "0 0 0.5rem 0",
+                            pl: "1rem",
+                          }}
+                        >
+                          {localComment.name}
+                        </Typography>
+                      </div>
                     </Box>
                   );
                 })}
