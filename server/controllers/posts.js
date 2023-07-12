@@ -100,13 +100,14 @@ export const likePost = async (req, res) => {
     const post = await Post.findById(id);
     if (post.likes.includes(userId)) {
       post.likes = post.likes.filter((i) => i != userId);
-      const notif = await new Notif({
-        userID: post.userId,
-        initiator: userId,
-        description: `${req.user.firstName} ${req.user.lastName} Liked your photo`,
-      });
     } else {
       post.likes.push(userId);
+      const notif = new Notif({
+        userID: post.userId,
+        initiator: userId,
+        description: `liked your photo`,
+      });
+      await notif.save();
     }
     await post.save();
     const latestPost = await post.populate(

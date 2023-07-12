@@ -39,13 +39,7 @@ export const listNotifs = async (req, res) => {
   if (req.user.id) {
     const result = await Notif.find({ userID: req.user.id })
       .sort({ date: -1 })
-      .select({
-        userID: 1,
-        initiator: 1,
-        description: 1,
-        isRead: 1,
-        date: 1,
-      });
+      .populate("initiator", "firstName lastName picturePath");
 
     res.status(200).json(result);
   } else {
