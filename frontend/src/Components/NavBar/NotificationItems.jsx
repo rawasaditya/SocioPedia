@@ -1,6 +1,8 @@
 import { MenuItem, Box, Typography, useTheme } from "@mui/material";
+import { format } from "date-fns";
+
 import UserImage from "../UserImage";
-const NotificationItems = ({ message, name, picture }) => {
+const NotificationItems = ({ message, name, picture, date }) => {
   const { palette } = useTheme();
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
@@ -8,7 +10,7 @@ const NotificationItems = ({ message, name, picture }) => {
     <MenuItem>
       <Box display="flex" flexDirection="column" sx={{ width: "100%" }}>
         <Typography color={medium} sx={{ fontSize: "0.7rem" }}>
-          4m ago
+          {format(new Date(date), "dd MMM yyyy")}
         </Typography>
         <Box>
           <Box display="flex" justifyContent="space-between">

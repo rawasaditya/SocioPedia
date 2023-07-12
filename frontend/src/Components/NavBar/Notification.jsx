@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Notifications } from "@mui/icons-material";
 import NotificationItem from "./NotificationItems";
+
 import {
   IconButton,
   Divider,
@@ -8,11 +9,11 @@ import {
   MenuList,
   Typography,
   Box,
-  useTheme,
+  Badge,
 } from "@mui/material";
+import { useSelector } from "react-redux";
 const Notification = () => {
-  const { palette } = useTheme();
-  const medium = palette.neutral.medium;
+  const notification = useSelector((state) => state.notification);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,7 +25,9 @@ const Notification = () => {
   return (
     <>
       <IconButton onClick={handleClick}>
-        <Notifications sx={{ fontSize: "1.5rem" }} />
+        <Badge badgeContent={notification.length} color="primary">
+          <Notifications sx={{ fontSize: "1.5rem" }} />
+        </Badge>
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -47,32 +50,18 @@ const Notification = () => {
             justifyContent="space-between"
           >
             <Typography variant="subtitle1">Notifications.</Typography>
-            <Typography color={medium} sx={{ fontSize: "0.7rem" }}>
-              4m
-            </Typography>
           </Box>
           <Divider />
           <MenuList>
-            <NotificationItem
-              message="Added you as a friends"
-              name="John Doe"
-              picture="p1.jpeg"
-            />
-            <NotificationItem
-              message="Liked your post"
-              name="Justin Rhysss"
-              picture="p2.jpeg"
-            />
-            <NotificationItem
-              message="Liked your post"
-              name="Aditya Rawas"
-              picture="p3.jpeg"
-            />
-            <NotificationItem
-              message="Commented on you post"
-              name="John Doe"
-              picture="p1.jpeg"
-            />
+            {notification.map((i) => (
+              <NotificationItem
+                key={i._id}
+                message={i.description}
+                name={`${i?.initiator?.firstName} ${i?.initiator?.lastName}`}
+                picture={i.initiator.picturePath}
+                date={i.date}
+              />
+            ))}
           </MenuList>
         </Box>
       </Menu>

@@ -5,9 +5,11 @@ import { Box, useMediaQuery } from "@mui/material";
 import PostsWidget from "../../Components/PostsWidget";
 import API from "../../axiosConfig.js";
 import FriendListWidget from "../../Components/FriendListWidget";
+import { useDispatch } from "react-redux";
+import { setNotification } from "../../state";
 const Home = () => {
   const [user, setUser] = useState(null);
-
+  const dispatch = useDispatch();
   let userDetails = JSON.parse(localStorage.getItem("user"));
   userDetails = userDetails.user;
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -26,8 +28,8 @@ const Home = () => {
       await new Promise((resolve) => setTimeout(resolve, 5000));
       await getNotification();
     } else {
-      let message = response.data;
-      console.log(message);
+      let notifications = response.data;
+      dispatch(setNotification(notifications));
       await new Promise((resolve) => setTimeout(resolve, 5000));
       await getNotification();
     }
@@ -49,7 +51,7 @@ const Home = () => {
         justifyContent="space-between"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget user={user} />
+          <UserWidget user={user} selfProfile={true} />
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}

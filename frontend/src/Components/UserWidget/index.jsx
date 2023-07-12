@@ -1,4 +1,9 @@
-import { ManageAccountsOutlined, WorkOutlined } from "@mui/icons-material";
+import {
+  ManageAccountsOutlined,
+  WorkOutlined,
+  PersonAddOutlined,
+  PersonRemoveOutlined,
+} from "@mui/icons-material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -14,13 +19,21 @@ import {
 import UserImage from "../UserImage";
 import FlexBoxBetween from "../FlexBoxBetween";
 import WidgetWrapper from "../WidgetWrapper";
+import { useSelector } from "react-redux";
+import API from "../../axiosConfig.js";
 import { useNavigate } from "react-router-dom";
-const UserWidget = ({ user, selfProfile }) => {
+
+const UserWidget = ({ user, selfProfile, getUser }) => {
+  const friendsList = useSelector((state) => state?.user?.friends);
+  const loggedIn = useSelector((state) => state?.user);
   const { palette } = useTheme();
   const navigate = useNavigate();
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
+  const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
+  const primaryLight = palette.primary.light;
+
   const {
     firstName,
     lastName,
@@ -33,6 +46,16 @@ const UserWidget = ({ user, selfProfile }) => {
     instagram,
     // _id,
   } = user;
+
+  const patchFriend = async () => {
+    if (user?._id) {
+      API.patch(`user/${loggedIn?._id}/${user._id}`)
+        .then(() => {})
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <WidgetWrapper>
       <FlexBoxBetween gap="0.5rem" flexDirection="column">
@@ -61,9 +84,29 @@ const UserWidget = ({ user, selfProfile }) => {
               <Typography color={medium}>{friends.length} friends</Typography>
             </Box>
           </Box>
-          {selfProfile && (
-            <IconButton>
-              <ManageAccountsOutlined />
+          {selfProfile ? (
+            <></>
+          ) : friendsList.map((i) => i._id)?.includes(user?._id) ? (
+            <IconButton
+              onClick={() => patchFriend()}
+              sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
+            >
+              <PersonRemoveOutlined
+                sx={{
+                  color: primaryDark,
+                }}
+              />
+            </IconButton>
+          ) : (
+            <IconButton
+              onClick={() => patchFriend()}
+              sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
+            >
+              <PersonAddOutlined
+                sx={{
+                  color: primaryDark,
+                }}
+              />
             </IconButton>
           )}
         </Box>
