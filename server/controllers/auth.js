@@ -44,29 +44,27 @@ export const register = async (req, res) => {
   }
 };
 
-export const UpdateUser=async(req,res)=>{
-  try{
-    const {
-      picturePath,
-      occupation,
-      linkedIn,
-      twitter,
-      instagram
-    }=req.body;
-    const {id}=req.params;
-    const update =await User.findOneAndUpdate({_id:id},
-      {$set:{
-        picturePath:picturePath,
-        occupation:occupation,
-        linkedIn:linkedIn,
-        twitter:twitter,
-        instagram:instagram
-      }})
-    res.status(201).json(update)
-  }catch(err){
+export const UpdateUser = async (req, res) => {
+  try {
+    const { picturePath, occupation, linkedIn, twitter, instagram } = req.body;
+    const { id } = req.params;
+    const update = await User.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          picturePath: picturePath,
+          occupation: occupation,
+          linkedIn: linkedIn,
+          twitter: twitter,
+          instagram: instagram,
+        },
+      }
+    );
+    res.status(201).json(update);
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
-}
+};
 
 export const login = async (req, res) => {
   try {
@@ -79,7 +77,10 @@ export const login = async (req, res) => {
     if (!user) throw { message: "User not found" };
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw { message: "User password not matched" };
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      { id: user._id, firstName: user.firstName, lastName: user.lastName },
+      process.env.JWT_SECRET
+    );
     const respDetails = { ...user._doc };
     delete respDetails.password;
     res.status(200).json({ user: respDetails, token });

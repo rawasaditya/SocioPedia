@@ -16,8 +16,26 @@ const Home = () => {
       setUser(res.data);
     });
   };
+
+  async function getNotification() {
+    let response = await API("/notifications");
+
+    if (response.status == 502) {
+      await getNotification();
+    } else if (response.status != 200) {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      await getNotification();
+    } else {
+      let message = response.data;
+      console.log(message);
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      await getNotification();
+    }
+  }
+
   useEffect(() => {
     getUser();
+    getNotification();
   }, []);
   if (!user) return null;
   const { picturePath } = user;

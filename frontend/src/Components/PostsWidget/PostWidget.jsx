@@ -24,11 +24,11 @@ const PostWidget = ({
   gifPath,
 }) => {
   const [isComments, setIsComments] = useState(false);
-  const [addComment, setAddComment] = useState(false);
+  const [likeCount, setlikeCount] = useState(0);
+  const [isLiked, setisLiked] = useState(false);
+
   const loggedInUser = useSelector((state) => state.user);
   const loggedInUserId = loggedInUser._id;
-  const isLiked = likes.includes(loggedInUserId);
-  const likeCount = Object.keys(likes).length;
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -41,6 +41,8 @@ const PostWidget = ({
     if (comments != null) {
       setIsComments(true);
     }
+    setisLiked(likes.includes(loggedInUserId));
+    setlikeCount(Object.keys(likes).length);
   }, [""]);
 
   const postComment = async () => {
@@ -64,15 +66,14 @@ const PostWidget = ({
       .catch((err) => {
         console.log(err);
       });
-
-    setAddComment(true);
   };
 
   const patchLike = async () => {
-    //
     API.patch(`posts/${_id}/like`)
       .then((data) => {
-        dispatch(setPost({ post: data.data }));
+        console.log(data.data.likes);
+        setisLiked(data.data.likes.includes(loggedInUserId));
+        setlikeCount(data.data.likes.length);
       })
       .catch((err) => {
         console.log(err);
@@ -211,51 +212,46 @@ const PostWidget = ({
               );
             })}
           </Box>
-          {addComment && (
-            <>
-              {!isComments && <Divider />}
-              <Box mt="0.5rem">
-                {localComments.map((localComment, idx) => {
-                  return (
-                    <Box
-                      key={idx}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        borderBottom: `1px solid #eee`,
-                        py: "0.5rem",
-                      }}
-                    >
-                      <UserImage
-                        image={loggedInUser.picturePath}
-                        size="2.5rem"
-                      />
-                      <div>
-                        <Typography
-                          sx={{
-                            color: medium,
-                            m: "0.5rem 0 0 0",
-                            pl: "1rem",
-                          }}
-                        >
-                          {`${loggedInUser.firstName} ${loggedInUser.lastName}`}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            color: main,
-                            m: "0 0 0.5rem 0",
-                            pl: "1rem",
-                          }}
-                        >
-                          {localComment.name}
-                        </Typography>
-                      </div>
-                    </Box>
-                  );
-                })}
-              </Box>
-            </>
-          )}
+          <>
+            {!isComments && <Divider />}
+            <Box mt="0.5rem">
+              {localComments.map((localComment, idx) => {
+                return (
+                  <Box
+                    key={idx}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      borderBottom: `1px solid #eee`,
+                      py: "0.5rem",
+                    }}
+                  >
+                    <UserImage image={loggedInUser.picturePath} size="2.5rem" />
+                    <div>
+                      <Typography
+                        sx={{
+                          color: medium,
+                          m: "0.5rem 0 0 0",
+                          pl: "1rem",
+                        }}
+                      >
+                        {`${loggedInUser.firstName} ${loggedInUser.lastName}`}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: main,
+                          m: "0 0 0.5rem 0",
+                          pl: "1rem",
+                        }}
+                      >
+                        {localComment.name}
+                      </Typography>
+                    </div>
+                  </Box>
+                );
+              })}
+            </Box>
+          </>
         </>
       )}
     </WidgetWrapper>
